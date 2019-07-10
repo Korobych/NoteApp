@@ -10,7 +10,7 @@
 		5A5FF848775A7FA7022423D5 /* libPods-NoteApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40238A09AF0FB87150B9ACA6 /* libPods-NoteApp.a */; };
 		6A24C153832E34319E1A1D87 /* libPods-NoteAppPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 234B39F8EA43B68AECD254D5 /* libPods-NoteAppPlus.a */; };
 		985F9D4022D0E451004BE06A /* FileNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F747D22C9556C00FDC695 /* FileNotebook.swift */; };
-		985F9D4122D0E451004BE06A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F745B22C921F300FDC695 /* ViewController.swift */; };
+		985F9D4122D0E451004BE06A /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F745B22C921F300FDC695 /* NoteEditViewController.swift */; };
 		985F9D4222D0E451004BE06A /* NoteExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F747B22C93E3E00FDC695 /* NoteExtension.swift */; };
 		985F9D4322D0E451004BE06A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F745922C921F300FDC695 /* AppDelegate.swift */; };
 		985F9D4422D0E451004BE06A /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F747922C9220600FDC695 /* Note.swift */; };
@@ -19,7 +19,7 @@
 		985F9D4922D0E451004BE06A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 989F745D22C921F300FDC695 /* Main.storyboard */; };
 		985F9D5122D0E5A4004BE06A /* NoteAppPlus-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 985F9D5022D0E5A4004BE06A /* NoteAppPlus-Info.plist */; };
 		989F745A22C921F300FDC695 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F745922C921F300FDC695 /* AppDelegate.swift */; };
-		989F745C22C921F300FDC695 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F745B22C921F300FDC695 /* ViewController.swift */; };
+		989F745C22C921F300FDC695 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F745B22C921F300FDC695 /* NoteEditViewController.swift */; };
 		989F745F22C921F300FDC695 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 989F745D22C921F300FDC695 /* Main.storyboard */; };
 		989F746122C921F400FDC695 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 989F746022C921F400FDC695 /* Assets.xcassets */; };
 		989F746422C921F400FDC695 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 989F746222C921F400FDC695 /* LaunchScreen.storyboard */; };
@@ -50,7 +50,7 @@
 		985F9D5022D0E5A4004BE06A /* NoteAppPlus-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NoteAppPlus-Info.plist"; sourceTree = "<group>"; };
 		989F745622C921F300FDC695 /* NoteApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NoteApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		989F745922C921F300FDC695 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		989F745B22C921F300FDC695 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		989F745B22C921F300FDC695 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
 		989F745E22C921F300FDC695 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		989F746022C921F400FDC695 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		989F746322C921F400FDC695 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -105,7 +105,6 @@
 				9A439E99F01C47B06E5FF83D /* Pods-NoteAppTests.debug.xcconfig */,
 				2497605008549A19BD1A46B8 /* Pods-NoteAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -154,7 +153,7 @@
 			children = (
 				980EA96722CF74BF0006F225 /* Models */,
 				989F745922C921F300FDC695 /* AppDelegate.swift */,
-				989F745B22C921F300FDC695 /* ViewController.swift */,
+				989F745B22C921F300FDC695 /* NoteEditViewController.swift */,
 				989F745D22C921F300FDC695 /* Main.storyboard */,
 				989F746022C921F400FDC695 /* Assets.xcassets */,
 				989F746222C921F400FDC695 /* LaunchScreen.storyboard */,
@@ -385,7 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				985F9D4022D0E451004BE06A /* FileNotebook.swift in Sources */,
-				985F9D4122D0E451004BE06A /* ViewController.swift in Sources */,
+				985F9D4122D0E451004BE06A /* NoteEditViewController.swift in Sources */,
 				985F9D4222D0E451004BE06A /* NoteExtension.swift in Sources */,
 				985F9D4322D0E451004BE06A /* AppDelegate.swift in Sources */,
 				985F9D4422D0E451004BE06A /* Note.swift in Sources */,
@@ -397,7 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				989F747E22C9556C00FDC695 /* FileNotebook.swift in Sources */,
-				989F745C22C921F300FDC695 /* ViewController.swift in Sources */,
+				989F745C22C921F300FDC695 /* NoteEditViewController.swift in Sources */,
 				989F747C22C93E3E00FDC695 /* NoteExtension.swift in Sources */,
 				989F745A22C921F300FDC695 /* AppDelegate.swift in Sources */,
 				989F747A22C9220600FDC695 /* Note.swift in Sources */,
@@ -604,7 +603,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconMain;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F8LU4P8SUH;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = NoteApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -624,7 +623,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconMain;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F8LU4P8SUH;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = NoteApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
