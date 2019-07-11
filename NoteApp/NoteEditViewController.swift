@@ -10,6 +10,10 @@ import UIKit
 
 class NoteEditViewController: UIViewController {
     
+    var bufferHeight: CGFloat!
+    var bufferWidth: CGFloat!
+    var lastTappedColorButton: UIButton? = nil
+    
     @IBOutlet weak var mainScrollView: UIScrollView!
     // MARK: TitleView
     @IBOutlet weak var titleTextField: UITextField!{
@@ -34,28 +38,12 @@ class NoteEditViewController: UIViewController {
     
     @IBAction func destroyDateSwitchTapped(_ sender: UISwitch) {
         if sender.isOn {
-            print("\nswitch is ON")
-            print(destroyDateView.frame)
+            print("\ndestroyDate switch is ON")
             destroyDateViewHeight.constant += 216
-            
-            let datePicker = UIDatePicker()
-            datePicker.minimumDate = Date()
-            datePicker.datePickerMode = .dateAndTime
-            destroyDateView.addSubview(datePicker)
-            
-            destroyDateView.layoutIfNeeded()
-            datePicker.frame = CGRect(x: destroyDateView.bounds.origin.x, y: destroyDateView.bounds.origin.y + destroyDateSwitch.frame.height, width: destroyDateView.bounds.width, height: destroyDateView.bounds.height)
-            print(destroyDateView.frame)
-            
-//            destroyDateView.translatesAutoresizingMaskIntoConstraints = false
-//            let horizontalLeadingConstraint = NSLayoutConstraint(item: datePicker, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: destroyDateView, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1, constant: 0)
-//            let horizontalTrailingConstraint = NSLayoutConstraint(item: datePicker, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: destroyDateView, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 0)
-//            let verticalTopSpaceContraint = NSLayoutConstraint(item: datePicker, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: destroyDateSwitch, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
-//            NSLayoutConstraint.activate([horizontalLeadingConstraint, horizontalTrailingConstraint, verticalTopSpaceContraint])
-            
-            
+            mainScrollView.layoutIfNeeded()
+            createDatePicker(width: destroyDateView.bounds.width)
         } else {
-            print("\nswitch is OFF")
+            print("\ndestroyDate switch is OFF")
             destroyDateViewHeight.constant -= 216
             for view in destroyDateView.subviews{
                 if view is UIDatePicker{
@@ -64,6 +52,60 @@ class NoteEditViewController: UIViewController {
             }
         }
     }
+    // MARK: ColorView
+    @IBOutlet weak var firstColorButton: UIButton!{
+        didSet{
+            firstColorButton.layer.borderColor = UIColor.black.cgColor
+            firstColorButton.layer.borderWidth = 1.0
+            firstColorButton.setTitle("", for: .normal)
+            firstColorButton.backgroundColor = UIColor.white
+        }
+    }
+    @IBOutlet weak var secondColorButton: UIButton!{
+        didSet{
+            secondColorButton.layer.borderColor = UIColor.black.cgColor
+            secondColorButton.layer.borderWidth = 1.0
+            secondColorButton.setTitle("", for: .normal)
+            secondColorButton.backgroundColor = UIColor.red
+        }
+    }
+    @IBOutlet weak var thirdColorButton: UIButton!{
+        didSet{
+            thirdColorButton.layer.borderColor = UIColor.black.cgColor
+            thirdColorButton.layer.borderWidth = 1.0
+            thirdColorButton.setTitle("", for: .normal)
+            thirdColorButton.backgroundColor = UIColor.green
+        }
+    }
+    @IBOutlet weak var fourthColorButton: UIButton!{
+        didSet{
+            fourthColorButton.layer.borderColor = UIColor.black.cgColor
+            fourthColorButton.layer.borderWidth = 1.0
+            fourthColorButton.setTitle("", for: .normal)
+        }
+    }
+    
+    @IBAction func changeColorButtonTapped(_ sender: UIButton) {
+        contentTextView.textColor = sender.backgroundColor
+        // check for last tapped color button -> remove CircleViewWithTick in it
+        if let lastTapped = lastTappedColorButton{
+            for v in lastTapped.subviews{
+                if v is CirlceViewWithTick{
+                    v.removeFromSuperview()
+                    break
+                }
+            }
+        }
+        lastTappedColorButton = sender
+        // add new view with CoreGraphics (tick in circle)
+        let cirlceView = CirlceViewWithTick(frame: sender.bounds)
+        cirlceView.backgroundColor = UIColor.clear
+        sender.addSubview(cirlceView)
+        
+    }
+    
+    @IBAction func colorPickerButtonTapped(_ sender: UIButton) {
+    }
     
     
     override func viewDidLoad() {
@@ -71,6 +113,45 @@ class NoteEditViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        bufferHeight = view.frame.height
+        bufferWidth = view.frame.width
+    }
+    
+    func createDatePicker(width: CGFloat){
+        let datePicker = UIDatePicker(frame: CGRect(x: destroyDateView.bounds.origin.x, y: destroyDateView.bounds.origin.y + destroyDateSwitch.frame.height, width: width, height: destroyDateView.bounds.height - destroyDateSwitch.frame.height))
+        datePicker.minimumDate = Date()
+        datePicker.datePickerMode = .dateAndTime
+        destroyDateView.addSubview(datePicker)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        if UIDevice.current.orientation.isLandscape {
+            print("isLandscape")
+            if destroyDateSwitch.isOn{
+                for view in destroyDateView.subviews{
+                    if view is UIDatePicker{
+                        view.removeFromSuperview()
+                        createDatePicker(width: bufferHeight)
+                        break
+                    }
+                }
+            }
+        } else if UIDevice.current.orientation.isPortrait{
+            print("isPortrait")
+            if destroyDateSwitch.isOn{
+                for view in destroyDateView.subviews{
+                    if view is UIDatePicker{
+                        view.removeFromSuperview()
+                        createDatePicker(width: bufferWidth)
+                        break
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension NoteEditViewController: UITextViewDelegate {
