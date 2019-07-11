@@ -82,6 +82,7 @@ class NoteEditViewController: UIViewController {
             fourthColorButton.layer.borderColor = UIColor.black.cgColor
             fourthColorButton.layer.borderWidth = 1.0
             fourthColorButton.setTitle("", for: .normal)
+            fourthColorButton.setBackgroundImage(UIImage(named: "spectrumPic"), for: .normal)
         }
     }
     
@@ -101,10 +102,10 @@ class NoteEditViewController: UIViewController {
         let cirlceView = CirlceViewWithTick(frame: sender.bounds)
         cirlceView.backgroundColor = UIColor.clear
         sender.addSubview(cirlceView)
-        
     }
     
     @IBAction func colorPickerButtonTapped(_ sender: UIButton) {
+//        showModal()
     }
     
     
@@ -125,6 +126,15 @@ class NoteEditViewController: UIViewController {
         datePicker.datePickerMode = .dateAndTime
         destroyDateView.addSubview(datePicker)
     }
+    
+//    func showModal() {
+//        let modalViewController = UIViewController()
+//        modalViewController.modalPresentationStyle = .overCurrentContext
+//
+//        let colorPickView = ColorPickerView()
+//        modalViewController.view.addSubview(colorPickView)
+//        present(modalViewController, animated: true, completion: nil)
+//    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
