@@ -105,7 +105,11 @@ class NoteEditViewController: UIViewController {
     }
     
     @IBAction func colorPickerButtonTapped(_ sender: UIButton) {
-//        showModal()
+        // Show ColorPickerViewController modally
+        let storyboard = UIStoryboard(name: "ColorPicker", bundle: nil)
+        let modalViewController = storyboard.instantiateViewController(withIdentifier: "colorPickerModal")
+        modalViewController.modalPresentationStyle = .overCurrentContext
+        present(modalViewController, animated: true, completion: nil)
     }
     
     
@@ -126,15 +130,6 @@ class NoteEditViewController: UIViewController {
         datePicker.datePickerMode = .dateAndTime
         destroyDateView.addSubview(datePicker)
     }
-    
-//    func showModal() {
-//        let modalViewController = UIViewController()
-//        modalViewController.modalPresentationStyle = .overCurrentContext
-//
-//        let colorPickView = ColorPickerView()
-//        modalViewController.view.addSubview(colorPickView)
-//        present(modalViewController, animated: true, completion: nil)
-//    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         

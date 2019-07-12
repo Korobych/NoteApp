@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,20 +15,20 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="NoteEditViewController" customModule="NoteApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HxZ-bV-rGV">
-                                <rect key="frame" x="0.0" y="40" width="320" height="528"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="798"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="VOI-rm-dN2">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="187"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="187"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dej-s8-L7t" userLabel="Title View">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rnX-RQ-GmI">
-                                                        <rect key="frame" x="20" y="10" width="280" height="30"/>
+                                                        <rect key="frame" x="20" y="10" width="374" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -44,10 +44,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aja-J1-HPM" userLabel="Content View">
-                                                <rect key="frame" x="0.0" y="55" width="320" height="30"/>
+                                                <rect key="frame" x="0.0" y="55" width="414" height="30"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bgk-XC-XJ1">
-                                                        <rect key="frame" x="20" y="0.0" width="280" height="30"/>
+                                                        <rect key="frame" x="20" y="0.0" width="374" height="30"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -63,10 +63,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="elx-lo-UDA" userLabel="Date View">
-                                                <rect key="frame" x="0.0" y="90" width="320" height="32"/>
+                                                <rect key="frame" x="0.0" y="90" width="414" height="32"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Destroy Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8UZ-18-RDk">
-                                                        <rect key="frame" x="20" y="5" width="142" height="21.5"/>
+                                                        <rect key="frame" x="20" y="5" width="142" height="21.666666666666668"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -88,10 +88,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KEB-pa-UE7" userLabel="Color View">
-                                                <rect key="frame" x="0.0" y="127" width="320" height="60"/>
+                                                <rect key="frame" x="0.0" y="127" width="414" height="60"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="adY-Vi-FOa">
-                                                        <rect key="frame" x="32.5" y="0.0" width="255" height="60"/>
+                                                        <rect key="frame" x="79.666666666666686" y="0.0" width="255" height="60"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6w-zY-tyW">
                                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -101,7 +101,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AXl-pb-0qQ">
-                                                                <rect key="frame" x="65" y="0.0" width="60" height="60"/>
+                                                                <rect key="frame" x="64.999999999999986" y="0.0" width="60" height="60"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <connections>
                                                                     <action selector="changeColorButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hOF-3t-ge4"/>
