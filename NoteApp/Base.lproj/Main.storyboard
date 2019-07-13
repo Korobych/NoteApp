@@ -117,9 +117,6 @@
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIO-e3-jAP">
                                                                 <rect key="frame" x="195" y="0.0" width="60" height="60"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <connections>
-                                                                    <action selector="colorPickerButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vz7-Dc-PXg"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>

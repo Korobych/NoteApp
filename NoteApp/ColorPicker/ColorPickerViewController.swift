@@ -9,6 +9,8 @@
 import UIKit
 
 class ColorPickerViewController: UIViewController {
+    
+    private var lastSelectedColor: UIColor? = nil
 
     // MARK: ColorPreView
     @IBOutlet weak var colorFullPreView: UIView!{
@@ -32,8 +34,21 @@ class ColorPickerViewController: UIViewController {
     }
     
     // MARK: BrightnessView
-    @IBOutlet weak var horizontalSlider: UISlider!
+    @IBOutlet weak var horizontalSlider: UISlider!{
+        didSet{
+            horizontalSlider.minimumValue = 0.0
+            horizontalSlider.maximumValue = 1.0
+            horizontalSlider.value = 1.0
+        }
+    }
     @IBAction func horizontalSliderTapped(_ sender: UISlider) {
+        let alphaValue = horizontalSlider.value
+        guard let lastSelectedColorWithAlpha = lastSelectedColor?.withAlphaComponent(CGFloat(alphaValue)) else {return}
+        colorHexLabel.text = lastSelectedColorWithAlpha.toHexString()
+        colorPreView.backgroundColor = lastSelectedColorWithAlpha
+        // saving color to local variable
+        lastSelectedColor = lastSelectedColorWithAlpha
+        
     }
     
     @IBOutlet weak var colorPickerView: ColorPickerView!{
@@ -41,19 +56,37 @@ class ColorPickerViewController: UIViewController {
             colorPickerView.layer.borderColor = UIColor.black.cgColor
             colorPickerView.layer.borderWidth = 1.0
             colorPickerView.whenColorDidChange = { [weak self] color in
-                self?.colorHexLabel.text = color.toHexString()
-                self?.colorPreView.backgroundColor = color
+                guard let sliderAlhpaValue = self?.horizontalSlider.value else {return}
+                let colorWithAlpha = color.withAlphaComponent(CGFloat(sliderAlhpaValue))
+                self?.colorHexLabel.text = colorWithAlpha.toHexString()
+                self?.colorPreView.backgroundColor = colorWithAlpha
+                // saving color to local variable
+                self?.lastSelectedColor = colorWithAlpha
             }
         }
     }
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: {
+            // send lastSelectedColor
+        })
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if UIDevice.current.orientation.isLandscape {
+            print(size.height, size.width)
+            colorPickerView.setNeedsDisplay()
+
+        } else if UIDevice.current.orientation.isPortrait{
+            print(size.height, size.width)
+            colorPickerView.setNeedsDisplay()
+        }
     }
   
 }

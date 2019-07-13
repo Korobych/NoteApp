@@ -83,6 +83,9 @@ class NoteEditViewController: UIViewController {
             fourthColorButton.layer.borderWidth = 1.0
             fourthColorButton.setTitle("", for: .normal)
             fourthColorButton.setBackgroundImage(UIImage(named: "spectrumPic"), for: .normal)
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(colorPickerLongPress))
+            longPress.minimumPressDuration = 1.0
+            fourthColorButton.addGestureRecognizer(longPress)
         }
     }
     
@@ -104,18 +107,9 @@ class NoteEditViewController: UIViewController {
         sender.addSubview(cirlceView)
     }
     
-    @IBAction func colorPickerButtonTapped(_ sender: UIButton) {
-        // Show ColorPickerViewController modally
-        let storyboard = UIStoryboard(name: "ColorPicker", bundle: nil)
-        let modalViewController = storyboard.instantiateViewController(withIdentifier: "colorPickerModal")
-        modalViewController.modalPresentationStyle = .overCurrentContext
-        present(modalViewController, animated: true, completion: nil)
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        hideKeyboard()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -131,8 +125,27 @@ class NoteEditViewController: UIViewController {
         destroyDateView.addSubview(datePicker)
     }
     
+    @objc func colorPickerLongPress(gesture: UILongPressGestureRecognizer) {
+        // Show ColorPickerViewController modally
+        if gesture.state == UIGestureRecognizer.State.began {
+            let storyboard = UIStoryboard(name: "ColorPicker", bundle: nil)
+            let modalViewController = storyboard.instantiateViewController(withIdentifier: "colorPickerModal")
+            modalViewController.modalPresentationStyle = .overCurrentContext
+            present(modalViewController, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: Keyboard Logic
+    func hideKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard(){
+        view.endEditing(true)
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
         if UIDevice.current.orientation.isLandscape {
             print("isLandscape")
             if destroyDateSwitch.isOn{
@@ -156,6 +169,7 @@ class NoteEditViewController: UIViewController {
                 }
             }
         }
+        super.viewWillTransition(to: size, with: coordinator)
     }
 }
 

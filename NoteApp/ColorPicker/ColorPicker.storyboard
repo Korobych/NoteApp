@@ -70,16 +70,32 @@
                                             <action selector="horizontalSliderTapped:" destination="el6-Ui-zGR" eventType="valueChanged" id="vAx-Tg-OvA"/>
                                         </connections>
                                     </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5n6-sF-ddR">
+                                        <rect key="frame" x="0.0" y="52" width="22" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fo6-x5-H6a">
+                                        <rect key="frame" x="180" y="52" width="20" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="wFI-aO-ceh" firstAttribute="leading" secondItem="vnB-PK-fUa" secondAttribute="leading" id="2dN-5z-wRl"/>
+                                    <constraint firstAttribute="trailing" secondItem="fo6-x5-H6a" secondAttribute="trailing" id="AIz-sB-u32"/>
                                     <constraint firstAttribute="trailing" secondItem="84h-Ui-wlR" secondAttribute="trailing" id="FME-ed-BjI"/>
                                     <constraint firstAttribute="width" secondItem="vnB-PK-fUa" secondAttribute="height" multiplier="2:1" id="Fxe-yc-DAZ"/>
                                     <constraint firstAttribute="width" constant="200" id="N76-ur-4Uk"/>
                                     <constraint firstAttribute="bottom" secondItem="84h-Ui-wlR" secondAttribute="bottom" id="nIN-Pf-QAM"/>
                                     <constraint firstItem="84h-Ui-wlR" firstAttribute="leading" secondItem="vnB-PK-fUa" secondAttribute="leading" id="oPP-JH-xmZ"/>
                                     <constraint firstItem="wFI-aO-ceh" firstAttribute="top" secondItem="vnB-PK-fUa" secondAttribute="top" constant="25" id="qAv-jb-7XZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="fo6-x5-H6a" secondAttribute="bottom" constant="30" id="xQS-m0-qdN"/>
+                                    <constraint firstAttribute="bottom" secondItem="5n6-sF-ddR" secondAttribute="bottom" constant="30" id="xXS-mW-kBb"/>
+                                    <constraint firstItem="5n6-sF-ddR" firstAttribute="leading" secondItem="vnB-PK-fUa" secondAttribute="leading" id="yAp-dC-wh6"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bhy-Tw-uKU" userLabel="Spectrum View" customClass="ColorPickerView" customModule="NoteApp" customModuleProvider="target">
