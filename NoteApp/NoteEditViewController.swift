@@ -129,8 +129,9 @@ class NoteEditViewController: UIViewController {
         // Show ColorPickerViewController modally
         if gesture.state == UIGestureRecognizer.State.began {
             let storyboard = UIStoryboard(name: "ColorPicker", bundle: nil)
-            let modalViewController = storyboard.instantiateViewController(withIdentifier: "colorPickerModal")
+            let modalViewController = storyboard.instantiateViewController(withIdentifier: "colorPickerModal") as! ColorPickerViewController
             modalViewController.modalPresentationStyle = .overCurrentContext
+            modalViewController.delegate = self
             present(modalViewController, animated: true, completion: nil)
         }
     }
@@ -185,5 +186,13 @@ extension NoteEditViewController: UITextViewDelegate {
             }
         }
         contentViewHeight.constant = estimatedSize.height
+    }
+}
+
+extension NoteEditViewController: ModalToNoteEditVCDelegate {
+    func loadColor() {
+        if let selectedColor = UserDefaults.standard.color(forKey: "selectedColor"){
+            contentTextView.textColor = selectedColor
+        }
     }
 }

@@ -8,9 +8,15 @@
 
 import UIKit
 
+// Delegate protocol
+protocol ModalToNoteEditVCDelegate: class {
+    func loadColor()
+}
+
 class ColorPickerViewController: UIViewController {
     
     private var lastSelectedColor: UIColor? = nil
+    weak var delegate: ModalToNoteEditVCDelegate?
 
     // MARK: ColorPreView
     @IBOutlet weak var colorFullPreView: UIView!{
@@ -68,25 +74,60 @@ class ColorPickerViewController: UIViewController {
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: {
-            // send lastSelectedColor
+            if let selectedColor = self.lastSelectedColor{
+                UserDefaults.standard.set(selectedColor, forKey: "selectedColor")
+            }
+            // call for delegate function
+            self.delegate?.loadColor()
         })
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // load locally stored color value
+        if let storedColor = UserDefaults.standard.color(forKey: "selectedColor"){
+            colorHexLabel.text = storedColor.toHexString()
+            colorPreView.backgroundColor = storedColor
+            guard let alphaComponent = storedColor.getRGBAComponents()?.alpha else {return}
+            horizontalSlider.value = Float(alphaComponent)
+        }
     }
 
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         if UIDevice.current.orientation.isLandscape {
-            print(size.height, size.width)
             colorPickerView.setNeedsDisplay()
-
         } else if UIDevice.current.orientation.isPortrait{
-            print(size.height, size.width)
             colorPickerView.setNeedsDisplay()
         }
     }
   
+}
+
+// MARK: UserDefaults custom methods to load/read UIColor 
+extension UserDefaults {
+    
+    func color(forKey key: String) -> UIColor? {
+        
+        guard let colorData = data(forKey: key) else { return nil }
+        
+        do {
+            return try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: colorData)
+        } catch let error {
+            print("color error \(error.localizedDescription)")
+            return nil
+        }
+        
+    }
+    
+    func set(_ value: UIColor?, forKey key: String) {
+        
+        guard let color = value else { return }
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: color, requiringSecureCoding: false)
+            set(data, forKey: key)
+        } catch let error {
+            print("error color key data not saved \(error.localizedDescription)")
+        }
+        
+    }
 }
