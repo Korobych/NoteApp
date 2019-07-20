@@ -10,6 +10,8 @@ import UIKit
 
 class NotesTableViewController: UIViewController {
 
+    private let fileNotebook = FileNotebook()
+    
     @IBOutlet weak var notesTableView: UITableView!{
         didSet{
             notesTableView.delegate = self
@@ -32,31 +34,33 @@ class NotesTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        fileNotebook.loadFromFile()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        notesTableView.reloadData()
     }
     
     // MARK: UIBarButtonItems action logic
     @objc func editBarButtonTapped() {
-        print("edit tapped")
-        if notesTableView.isEditing {
-            notesTableView.isEditing = false
-        } else {
-            notesTableView.isEditing = true
-        }
+        notesTableView.isEditing = !notesTableView.isEditing
     }
     
     @objc func addBarButtonTapped() {
-        print("add tapped")
         performSegue(withIdentifier: "showNoteEditVC", sender: addBarButton)
     }
     
+    // MARK: prepare for note editing VC segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showNoteEditVC" {
-            // do stuff here
-            if let barButtonSender = sender as? UIBarButtonItem {
-                print("empty build")
+            guard let nextVC = segue.destination as? NoteEditViewController else {return}
+            nextVC.fileNotebook = fileNotebook
+            if let _ = sender as? UIBarButtonItem {
+                print("new note edit")
             } else if let indexPathSender = sender as? IndexPath {
-                print("preload data")
+                let selectedNote = fileNotebook.notesArray[indexPathSender.row]
+                nextVC.selectedNote = selectedNote
             }
         }
             
@@ -70,8 +74,9 @@ extension NotesTableViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
-//        let note = notebook[indexPath]
-//        notebook.remove(with: note.uid)
+        let note = fileNotebook.notesArray[indexPath.row]
+        fileNotebook.remove(with: note.uid)
+        fileNotebook.saveToFile()
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
     
@@ -81,53 +86,15 @@ extension NotesTableViewController: UITableViewDelegate, UITableViewDataSource {
     
     // MARK: UITableViewDataSource methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // test only
-        return 10
+        return fileNotebook.notesArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell", for: indexPath) as! NoteTableViewCell
-        if indexPath.row == 0 {
-            cell.colorView.backgroundColor = .red
-            cell.titleLabel.text = "Тестовая заметка №1"
-            cell.contentLabel.text = "параша - судьба наша"
-        } else if indexPath.row == 1 {
-            cell.colorView.backgroundColor = .yellow
-            cell.titleLabel.text = "Тестовая заметка №2"
-            cell.contentLabel.text = "параша - судьба наша\nпараша - судьба наша"
-        } else if indexPath.row == 2 {
-            cell.colorView.backgroundColor = .black
-            cell.titleLabel.text = "Тестовая заметка №3"
-            cell.contentLabel.text = "параша - судьба наша\nпараша - судьба наша\nпараша - судьба наша"
-        } else if indexPath.row == 3 {
-            cell.colorView.backgroundColor = .blue
-            cell.titleLabel.text = "Тестовая заметка №4"
-            cell.contentLabel.text = "параша - судьба наша\nпараша - судьба наша\nпараша - судьба наша\nпараша - судьба наша"
-        } else if indexPath.row == 4 {
-            cell.colorView.backgroundColor = .green
-            cell.titleLabel.text = "Тестовая заметка №5"
-            cell.contentLabel.text = "параша - судьба наша\nпараша - судьба наша\nпараша - судьба наша\nпараша - судьба наша\nпараша - судьба наша"
-        } else if indexPath.row == 5 {
-            cell.colorView.backgroundColor = .black
-            cell.titleLabel.text = "BLACK"
-            cell.contentLabel.text = "параша - судьба наша\nпараша - судьба наша\nпараша - судьба наша\nпараша - судьба наша\nпараша - судьба наша\nпараша - судьба наша"
-        } else if indexPath.row == 6 {
-            cell.colorView.backgroundColor = .black
-            cell.titleLabel.text = "BLACK vol 2"
-            cell.contentLabel.text = "елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!"
-        } else if indexPath.row == 7 {
-            cell.colorView.backgroundColor = .black
-            cell.titleLabel.text = "BLACK vol 2"
-            cell.contentLabel.text = "елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!"
-        } else if indexPath.row == 8 {
-            cell.colorView.backgroundColor = .black
-            cell.titleLabel.text = "BLACK vol 2"
-            cell.contentLabel.text = "елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!"
-        } else if indexPath.row == 9 {
-            cell.colorView.backgroundColor = .black
-            cell.titleLabel.text = "BLACK vol 2"
-            cell.contentLabel.text = "елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!елки иголки и ебал я телку, елки-иголки и ебал я телку!"
-        }
+        let note = fileNotebook.notesArray[indexPath.row]
+        cell.colorView.backgroundColor = note.color
+        cell.titleLabel.text = note.title
+        cell.contentLabel.text = note.content
         return cell
     }
     

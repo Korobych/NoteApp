@@ -23,7 +23,7 @@ struct Note {
     let importance: Importance
     let selfDestructionDate: Date?
     
-    init(uid: String = UUID().uuidString, title: String, content: String, color: UIColor = UIColor.white, importance: Importance, selfDestructionDate: Date? = nil) {
+    init(uid: String = UUID().uuidString, title: String, content: String, color: UIColor, importance: Importance = Importance.basic, selfDestructionDate: Date?) {
         self.uid = uid
         self.title = title
         self.content = content

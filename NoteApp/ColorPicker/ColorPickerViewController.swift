@@ -10,12 +10,13 @@ import UIKit
 
 // Delegate protocol
 protocol ModalToNoteEditVCDelegate: class {
-    func loadColor()
+    func getChangedNote(note: Note)
 }
 
 class ColorPickerViewController: UIViewController {
     
     private var lastSelectedColor: UIColor? = nil
+    var selectedNote: Note? = nil
     weak var delegate: ModalToNoteEditVCDelegate?
 
     // MARK: ColorPreView
@@ -73,22 +74,28 @@ class ColorPickerViewController: UIViewController {
     }
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {
-        if let selectedColor = self.lastSelectedColor{
-            UserDefaults.standard.set(selectedColor, forKey: "selectedColor")
+        guard let selectedColor = lastSelectedColor else {return}
+        if let selectedNote = selectedNote {
+            let changedNote = Note(uid: selectedNote.uid, title: selectedNote.title, content: selectedNote.content, color: selectedColor, importance: Importance.basic, selfDestructionDate: selectedNote.selfDestructionDate)
+            delegate?.getChangedNote(note: changedNote)
+        } else {
+//            // setting new note
+//            let newNote = Note(title: "", content: "", color: selectedColor, selfDestructionDate: nil)
+//            delegate?.getChangedNote(note: newNote)
         }
-        delegate?.loadColor()
         navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // load locally stored color value
-        if let storedColor = UserDefaults.standard.color(forKey: "selectedColor"){
-            colorHexLabel.text = storedColor.toHexString()
-            colorPreView.backgroundColor = storedColor
-            guard let alphaComponent = storedColor.getRGBAComponents()?.alpha else {return}
+        print(#function)
+        if let selectedColor = selectedNote?.color {
+            lastSelectedColor = selectedColor
+            colorHexLabel.text = selectedColor.toHexString()
+            colorPreView.backgroundColor = selectedColor
+            guard let alphaComponent = selectedColor.getRGBAComponents()?.alpha else {return}
             horizontalSlider.value = Float(alphaComponent)
-        }
+        } 
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

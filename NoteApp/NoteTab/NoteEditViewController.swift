@@ -10,17 +10,23 @@ import UIKit
 
 class NoteEditViewController: UIViewController {
     
+    var fileNotebook: FileNotebook!
+    var selectedNote: Note? = nil
+    
     var bufferHeight: CGFloat!
     var bufferWidth: CGFloat!
     var lastTappedColorButton: UIButton? = nil
+    var addedDatePicker: UIDatePicker? = nil
     
     @IBOutlet weak var mainScrollView: UIScrollView!
-    // MARK: TitleView
-    @IBOutlet weak var titleTextField: UITextField!{
+    @IBOutlet weak var saveBarButton: UIBarButtonItem!{
         didSet{
-            titleTextField.placeholder = "Enter title for your note"
+            saveBarButton.target = self
+            saveBarButton.action = #selector(saveBarButtonTapped)
         }
     }
+    // MARK: TitleView
+    @IBOutlet weak var titleTextField: UITextField!
     // MARK: ContentView
     @IBOutlet weak var contentViewHeight: NSLayoutConstraint!
     @IBOutlet weak var contentTextView: UITextView!{
@@ -41,7 +47,7 @@ class NoteEditViewController: UIViewController {
             print("\ndestroyDate switch is ON")
             destroyDateViewHeight.constant += 216
             mainScrollView.layoutIfNeeded()
-            createDatePicker(width: destroyDateView.bounds.width)
+            createDatePicker(width: destroyDateView.bounds.width, date: selectedNote?.selfDestructionDate)
         } else {
             print("\ndestroyDate switch is OFF")
             destroyDateViewHeight.constant -= 216
@@ -50,6 +56,7 @@ class NoteEditViewController: UIViewController {
                     view.removeFromSuperview()
                 }
             }
+            addedDatePicker = nil
         }
     }
     // MARK: ColorView
@@ -59,6 +66,7 @@ class NoteEditViewController: UIViewController {
             firstColorButton.layer.borderWidth = 1.0
             firstColorButton.setTitle("", for: .normal)
             firstColorButton.backgroundColor = UIColor.white
+            addCircleWithTickView(button: firstColorButton)
         }
     }
     @IBOutlet weak var secondColorButton: UIButton!{
@@ -91,7 +99,6 @@ class NoteEditViewController: UIViewController {
     
     @IBAction func changeColorButtonTapped(_ sender: UIButton) {
         if sender.backgroundColor != nil {
-//            contentTextView.textColor = sender.backgroundColor
             addCircleWithTickView(button: sender)
         }
     }
@@ -101,16 +108,25 @@ class NoteEditViewController: UIViewController {
         hideKeyboard()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         getInfoFromNote()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         bufferHeight = view.frame.height
         bufferWidth = view.frame.width
     }
     
-    func createDatePicker(width: CGFloat){
+    func createDatePicker(width: CGFloat, date: Date? = nil){
         let datePicker = UIDatePicker(frame: CGRect(x: destroyDateView.bounds.origin.x, y: destroyDateView.bounds.origin.y + destroyDateSwitch.frame.height, width: width, height: destroyDateView.bounds.height - destroyDateSwitch.frame.height))
         datePicker.minimumDate = Date()
         datePicker.datePickerMode = .dateAndTime
+        if let selectedDate = date{
+            datePicker.date = selectedDate
+        }
+        addedDatePicker = datePicker
         destroyDateView.addSubview(datePicker)
     }
     
@@ -131,14 +147,85 @@ class NoteEditViewController: UIViewController {
         button.addSubview(cirlceView)
     }
     
+    func getInfoFromNote(){
+        // get info from note and update UI
+        guard let editableNote = selectedNote else {return}
+        titleTextField.text = editableNote.title
+        contentTextView.text = editableNote.content
+        textViewDidChange(contentTextView)
+        switch editableNote.color {
+        case .white:
+            addCircleWithTickView(button: firstColorButton)
+        case .red:
+            addCircleWithTickView(button: secondColorButton)
+        case .green:
+            addCircleWithTickView(button: thirdColorButton)
+        case let color:
+            addCircleWithTickView(button: fourthColorButton)
+            fourthColorButton.setBackgroundImage(nil, for: .normal)
+            fourthColorButton.backgroundColor = color
+        }
+        // get destructionDate if it is stored and update it in UI
+        guard let destructionDate = editableNote.selfDestructionDate else {return}
+        if addedDatePicker == nil {
+            destroyDateSwitch.isOn = true
+            destroyDateViewHeight.constant += 216
+            mainScrollView.layoutIfNeeded()
+            createDatePicker(width: destroyDateView.bounds.width, date: destructionDate)
+        }
+    }
+    
     @objc func colorPickerLongPress(gesture: UILongPressGestureRecognizer) {
         // Show ColorPickerViewController modally
         if gesture.state == UIGestureRecognizer.State.began {
             let storyboard = UIStoryboard(name: "ColorPicker", bundle: nil)
             let colorPickerViewController = storyboard.instantiateViewController(withIdentifier: "colorPickerModal") as! ColorPickerViewController
             colorPickerViewController.delegate = self
+            if selectedNote == nil {
+                // case when user creating new note
+                guard let title = titleTextField.text else {return}
+                guard let content = contentTextView.text else {return}
+                guard let selectedColor = lastTappedColorButton?.backgroundColor else {return}
+                var destructionDate: Date? = nil
+                if let datePicker = addedDatePicker {
+                    destructionDate = datePicker.date
+                }
+                colorPickerViewController.selectedNote = Note(title: title, content: content, color: selectedColor, selfDestructionDate: destructionDate)
+            } else {
+                // defalut edit scenario
+                colorPickerViewController.selectedNote = selectedNote
+            }
             navigationController?.pushViewController(colorPickerViewController, animated: true)
         }
+    }
+    
+    @objc func saveBarButtonTapped() {
+        var index = -1
+        if let selectedNote = selectedNote {
+            // case when user edits existing note
+            // this note should be deleted from array
+            index = fileNotebook.remove(with: selectedNote.uid)
+        }
+        // then new note should be created and saved
+        guard let title = titleTextField.text else {return}
+        guard let content = contentTextView.text else {return}
+        guard let selectedColor = lastTappedColorButton?.backgroundColor else {return}
+        // destruction date attempt to get value
+        var destructionDate: Date? = nil
+        if let datePicker = addedDatePicker {
+            destructionDate = datePicker.date
+        }
+        let newNote = Note(title: title, content: content, color: selectedColor, importance: Importance.basic, selfDestructionDate: destructionDate)
+        if index >= 0 {
+            // case when user edits existing note
+            // add note to the same array index as previously deleted note
+            fileNotebook.addWithIndex(note: newNote, index: index)
+        } else {
+            fileNotebook.add(noteToAdd: newNote)
+        }
+        fileNotebook.saveToFile()
+        selectedNote = nil
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: Keyboard Logic
@@ -159,7 +246,7 @@ class NoteEditViewController: UIViewController {
                 for view in destroyDateView.subviews{
                     if view is UIDatePicker{
                         view.removeFromSuperview()
-                        createDatePicker(width: bufferHeight)
+                        createDatePicker(width: bufferHeight, date: selectedNote?.selfDestructionDate)
                         break
                     }
                 }
@@ -170,7 +257,7 @@ class NoteEditViewController: UIViewController {
                 for view in destroyDateView.subviews{
                     if view is UIDatePicker{
                         view.removeFromSuperview()
-                        createDatePicker(width: bufferWidth)
+                        createDatePicker(width: bufferWidth, date: selectedNote?.selfDestructionDate)
                         break
                     }
                 }
@@ -196,12 +283,7 @@ extension NoteEditViewController: UITextViewDelegate {
 }
 
 extension NoteEditViewController: ModalToNoteEditVCDelegate {
-    func loadColor() {
-        if let selectedColor = UserDefaults.standard.color(forKey: "selectedColor"){
-//            contentTextView.textColor = selectedColor
-            fourthColorButton.setBackgroundImage(nil, for: .normal)
-            fourthColorButton.backgroundColor = selectedColor
-            addCircleWithTickView(button: fourthColorButton)
-        }
+    func getChangedNote(note: Note) {
+        selectedNote = note
     }
 }

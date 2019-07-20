@@ -54,14 +54,14 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k39-Ky-oEH" userLabel="Title Label">
-                                                    <rect key="frame" x="55" y="11.999999999999998" width="339" height="20.333333333333329"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="55" y="12.000000000000002" width="339" height="21.666666666666671"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5c-ks-qSa" userLabel="Content Label">
                                                     <rect key="frame" x="20" y="43" width="374" height="19.666666666666671"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -132,7 +132,7 @@
         <!--Редактирование-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Редактирование" id="BYZ-38-t0r" customClass="NoteEditViewController" customModule="NoteApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="NoteEditViewController" customModule="NoteApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -146,7 +146,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dej-s8-L7t" userLabel="Title View">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rnX-RQ-GmI">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter title for your note" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rnX-RQ-GmI">
                                                         <rect key="frame" x="20" y="10" width="374" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -275,6 +275,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Редактирование" id="cJS-1Z-0GV">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="CLu-lJ-JHK"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="contentTextView" destination="bgk-XC-XJ1" id="qck-9A-4ND"/>
                         <outlet property="contentViewHeight" destination="PWy-eC-2ff" id="7Iq-6b-PFK"/>
@@ -284,6 +287,7 @@
                         <outlet property="firstColorButton" destination="j6w-zY-tyW" id="OG7-Sc-3uk"/>
                         <outlet property="fourthColorButton" destination="rIO-e3-jAP" id="9iD-26-F0y"/>
                         <outlet property="mainScrollView" destination="HxZ-bV-rGV" id="TdF-R6-bZu"/>
+                        <outlet property="saveBarButton" destination="CLu-lJ-JHK" id="oOw-gh-MIJ"/>
                         <outlet property="secondColorButton" destination="AXl-pb-0qQ" id="BaE-jI-oXG"/>
                         <outlet property="thirdColorButton" destination="HL7-ji-Xmz" id="n0V-MB-wiR"/>
                         <outlet property="titleTextField" destination="rnX-RQ-GmI" id="mbj-32-bPr"/>
