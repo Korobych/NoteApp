@@ -77,7 +77,7 @@ class ColorPickerViewController: UIViewController {
             UserDefaults.standard.set(selectedColor, forKey: "selectedColor")
         }
         delegate?.loadColor()
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {

@@ -7,24 +7,15 @@
 //
 
 import UIKit
-import CocoaLumberjack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    public static var logLevel: DDLogLevel = .info
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
          // Override point for customization after application launch.
         // Debugger setting up
-        DDLog.add(DDOSLogger.sharedInstance, with: AppDelegate.logLevel)
-        //
-        DDLogInfo("Application is ready")
-        let _ = Note(uid: "0010", title: "damn", content: "scraa", color: .white, importance: .important, selfDestructionDate: nil)
-        // this wouldn't be fired up because of the AppDelegate's logLevel
-        DDLogDebug("Debug message")
         return true
     }
 
