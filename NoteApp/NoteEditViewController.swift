@@ -90,21 +90,10 @@ class NoteEditViewController: UIViewController {
     }
     
     @IBAction func changeColorButtonTapped(_ sender: UIButton) {
-        contentTextView.textColor = sender.backgroundColor
-        // check for last tapped color button -> remove CircleViewWithTick in it
-        if let lastTapped = lastTappedColorButton{
-            for v in lastTapped.subviews{
-                if v is CirlceViewWithTick{
-                    v.removeFromSuperview()
-                    break
-                }
-            }
+        if sender.backgroundColor != nil {
+            contentTextView.textColor = sender.backgroundColor
+            addCircleWithTickView(button: sender)
         }
-        lastTappedColorButton = sender
-        // add new view with CoreGraphics (tick in circle)
-        let cirlceView = CirlceViewWithTick(frame: sender.bounds)
-        cirlceView.backgroundColor = UIColor.clear
-        sender.addSubview(cirlceView)
     }
     
     override func viewDidLoad() {
@@ -123,6 +112,23 @@ class NoteEditViewController: UIViewController {
         datePicker.minimumDate = Date()
         datePicker.datePickerMode = .dateAndTime
         destroyDateView.addSubview(datePicker)
+    }
+    
+    func addCircleWithTickView(button: UIButton) {
+        // check for last tapped color button -> remove CircleViewWithTick in it
+        if let lastTapped = lastTappedColorButton{
+            for v in lastTapped.subviews{
+                if v is CirlceViewWithTick{
+                    v.removeFromSuperview()
+                    break
+                }
+            }
+        }
+        lastTappedColorButton = button
+        // add new view with CoreGraphics (tick in circle)
+        let cirlceView = CirlceViewWithTick(frame: button.bounds)
+        cirlceView.backgroundColor = UIColor.clear
+        button.addSubview(cirlceView)
     }
     
     @objc func colorPickerLongPress(gesture: UILongPressGestureRecognizer) {
@@ -146,6 +152,7 @@ class NoteEditViewController: UIViewController {
         view.endEditing(true)
     }
     
+    // MARK: Orientation change logic
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         if UIDevice.current.orientation.isLandscape {
             print("isLandscape")
@@ -193,6 +200,9 @@ extension NoteEditViewController: ModalToNoteEditVCDelegate {
     func loadColor() {
         if let selectedColor = UserDefaults.standard.color(forKey: "selectedColor"){
             contentTextView.textColor = selectedColor
+            fourthColorButton.setBackgroundImage(nil, for: .normal)
+            fourthColorButton.backgroundColor = selectedColor
+            addCircleWithTickView(button: fourthColorButton)
         }
     }
 }

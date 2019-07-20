@@ -73,13 +73,11 @@ class ColorPickerViewController: UIViewController {
     }
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {
-        dismiss(animated: true, completion: {
-            if let selectedColor = self.lastSelectedColor{
-                UserDefaults.standard.set(selectedColor, forKey: "selectedColor")
-            }
-            // call for delegate function
-            self.delegate?.loadColor()
-        })
+        if let selectedColor = self.lastSelectedColor{
+            UserDefaults.standard.set(selectedColor, forKey: "selectedColor")
+        }
+        delegate?.loadColor()
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
