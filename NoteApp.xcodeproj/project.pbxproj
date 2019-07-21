@@ -37,6 +37,12 @@
 		98CA38F922E32DEA00851E53 /* NotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CA38F722E32DEA00851E53 /* NotesTableViewController.swift */; };
 		98CA38FB22E32E1D00851E53 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CA38FA22E32E1D00851E53 /* NoteTableViewCell.swift */; };
 		98CA38FC22E32E1D00851E53 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CA38FA22E32E1D00851E53 /* NoteTableViewCell.swift */; };
+		98D01D5A22E4515700CCFC15 /* GalleryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D01D5922E4515700CCFC15 /* GalleryCollectionViewController.swift */; };
+		98D01D5B22E4515700CCFC15 /* GalleryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D01D5922E4515700CCFC15 /* GalleryCollectionViewController.swift */; };
+		98D01D5D22E4541E00CCFC15 /* GalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D01D5C22E4541E00CCFC15 /* GalleryCollectionViewCell.swift */; };
+		98D01D5E22E4541E00CCFC15 /* GalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D01D5C22E4541E00CCFC15 /* GalleryCollectionViewCell.swift */; };
+		98D01D6022E459A500CCFC15 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D01D5F22E459A500CCFC15 /* ImagePreviewViewController.swift */; };
+		98D01D6122E459A500CCFC15 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D01D5F22E459A500CCFC15 /* ImagePreviewViewController.swift */; };
 		98E3CFD122D7C418006E9387 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98E3CFD022D7C418006E9387 /* Media.xcassets */; };
 		98E3CFD222D7C418006E9387 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98E3CFD022D7C418006E9387 /* Media.xcassets */; };
 		98E3CFDC22D87A4A006E9387 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E3CFDA22D87A4A006E9387 /* ColorPickerViewController.swift */; };
@@ -75,6 +81,9 @@
 		989F747D22C9556C00FDC695 /* FileNotebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNotebook.swift; sourceTree = "<group>"; };
 		98CA38F722E32DEA00851E53 /* NotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
 		98CA38FA22E32E1D00851E53 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
+		98D01D5922E4515700CCFC15 /* GalleryCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCollectionViewController.swift; sourceTree = "<group>"; };
+		98D01D5C22E4541E00CCFC15 /* GalleryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCollectionViewCell.swift; sourceTree = "<group>"; };
+		98D01D5F22E459A500CCFC15 /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
 		98E3CFD022D7C418006E9387 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		98E3CFDA22D87A4A006E9387 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,7 +156,7 @@
 			children = (
 				989F745922C921F300FDC695 /* AppDelegate.swift */,
 				98CA38F522E32B2500851E53 /* NoteTab */,
-				98CA38F622E32B3500851E53 /* GalleryTab */,
+				98D01D5822E4512600CCFC15 /* GalleryTab */,
 				98E3CFD322D878A7006E9387 /* ColorPicker */,
 				980EA96722CF74BF0006F225 /* Models */,
 				989F745D22C921F300FDC695 /* Main.storyboard */,
@@ -180,9 +189,12 @@
 			path = NoteTab;
 			sourceTree = "<group>";
 		};
-		98CA38F622E32B3500851E53 /* GalleryTab */ = {
+		98D01D5822E4512600CCFC15 /* GalleryTab */ = {
 			isa = PBXGroup;
 			children = (
+				98D01D5922E4515700CCFC15 /* GalleryCollectionViewController.swift */,
+				98D01D5C22E4541E00CCFC15 /* GalleryCollectionViewCell.swift */,
+				98D01D5F22E459A500CCFC15 /* ImagePreviewViewController.swift */,
 			);
 			path = GalleryTab;
 			sourceTree = "<group>";
@@ -333,14 +345,17 @@
 			files = (
 				9801EAE022D881ED00E657F9 /* ColorPickerView.swift in Sources */,
 				9801EAE322D88F6F00E657F9 /* Extensions.swift in Sources */,
+				98D01D6122E459A500CCFC15 /* ImagePreviewViewController.swift in Sources */,
 				985F9D4022D0E451004BE06A /* FileNotebook.swift in Sources */,
 				984E0DC922D7B27300D02C7D /* CirlceViewWithTick.swift in Sources */,
 				985F9D4122D0E451004BE06A /* NoteEditViewController.swift in Sources */,
 				98E3CFDD22D87A4A006E9387 /* ColorPickerViewController.swift in Sources */,
 				985F9D4222D0E451004BE06A /* NoteExtension.swift in Sources */,
+				98D01D5B22E4515700CCFC15 /* GalleryCollectionViewController.swift in Sources */,
 				985F9D4322D0E451004BE06A /* AppDelegate.swift in Sources */,
 				985F9D4422D0E451004BE06A /* Note.swift in Sources */,
 				98CA38F922E32DEA00851E53 /* NotesTableViewController.swift in Sources */,
+				98D01D5E22E4541E00CCFC15 /* GalleryCollectionViewCell.swift in Sources */,
 				98CA38FC22E32E1D00851E53 /* NoteTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,14 +366,17 @@
 			files = (
 				9801EADF22D881ED00E657F9 /* ColorPickerView.swift in Sources */,
 				9801EAE222D88F6E00E657F9 /* Extensions.swift in Sources */,
+				98D01D6022E459A500CCFC15 /* ImagePreviewViewController.swift in Sources */,
 				989F747E22C9556C00FDC695 /* FileNotebook.swift in Sources */,
 				984E0DC822D7B27300D02C7D /* CirlceViewWithTick.swift in Sources */,
 				989F745C22C921F300FDC695 /* NoteEditViewController.swift in Sources */,
 				98E3CFDC22D87A4A006E9387 /* ColorPickerViewController.swift in Sources */,
 				989F747C22C93E3E00FDC695 /* NoteExtension.swift in Sources */,
+				98D01D5A22E4515700CCFC15 /* GalleryCollectionViewController.swift in Sources */,
 				989F745A22C921F300FDC695 /* AppDelegate.swift in Sources */,
 				989F747A22C9220600FDC695 /* Note.swift in Sources */,
 				98CA38F822E32DEA00851E53 /* NotesTableViewController.swift in Sources */,
+				98D01D5D22E4541E00CCFC15 /* GalleryCollectionViewCell.swift in Sources */,
 				98CA38FB22E32E1D00851E53 /* NoteTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -567,7 +585,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.SergeyKorobin.NoteApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dev.NoteApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -586,7 +604,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.SergeyKorobin.NoteApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dev.NoteApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
