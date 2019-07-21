@@ -13,8 +13,6 @@ class NoteEditViewController: UIViewController {
     var fileNotebook: FileNotebook!
     var selectedNote: Note? = nil
     
-    var bufferHeight: CGFloat!
-    var bufferWidth: CGFloat!
     var lastTappedColorButton: UIButton? = nil
     var addedDatePicker: UIDatePicker? = nil
     
@@ -47,7 +45,7 @@ class NoteEditViewController: UIViewController {
             print("\ndestroyDate switch is ON")
             destroyDateViewHeight.constant += 216
             mainScrollView.layoutIfNeeded()
-            createDatePicker(width: destroyDateView.bounds.width, date: selectedNote?.selfDestructionDate)
+            createDatePicker(width: view.frame.width, date: selectedNote?.selfDestructionDate)
         } else {
             print("\ndestroyDate switch is OFF")
             destroyDateViewHeight.constant -= 216
@@ -113,12 +111,6 @@ class NoteEditViewController: UIViewController {
          getInfoFromNote()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        bufferHeight = view.frame.height
-        bufferWidth = view.frame.width
-    }
-    
     func createDatePicker(width: CGFloat, date: Date? = nil){
         let datePicker = UIDatePicker(frame: CGRect(x: destroyDateView.bounds.origin.x, y: destroyDateView.bounds.origin.y + destroyDateSwitch.frame.height, width: width, height: destroyDateView.bounds.height - destroyDateSwitch.frame.height))
         datePicker.minimumDate = Date()
@@ -126,8 +118,9 @@ class NoteEditViewController: UIViewController {
         if let selectedDate = date{
             datePicker.date = selectedDate
         }
-        addedDatePicker = datePicker
         destroyDateView.addSubview(datePicker)
+        
+        addedDatePicker = datePicker
     }
     
     func addCircleWithTickView(button: UIButton) {
@@ -171,7 +164,7 @@ class NoteEditViewController: UIViewController {
             destroyDateSwitch.isOn = true
             destroyDateViewHeight.constant += 216
             mainScrollView.layoutIfNeeded()
-            createDatePicker(width: destroyDateView.bounds.width, date: destructionDate)
+            createDatePicker(width: view.frame.width, date: destructionDate)
         }
     }
     
@@ -246,7 +239,7 @@ class NoteEditViewController: UIViewController {
                 for view in destroyDateView.subviews{
                     if view is UIDatePicker{
                         view.removeFromSuperview()
-                        createDatePicker(width: bufferHeight, date: selectedNote?.selfDestructionDate)
+                        createDatePicker(width: size.height, date: selectedNote?.selfDestructionDate)
                         break
                     }
                 }
@@ -257,7 +250,7 @@ class NoteEditViewController: UIViewController {
                 for view in destroyDateView.subviews{
                     if view is UIDatePicker{
                         view.removeFromSuperview()
-                        createDatePicker(width: bufferWidth, date: selectedNote?.selfDestructionDate)
+                        createDatePicker(width: size.width, date: selectedNote?.selfDestructionDate)
                         break
                     }
                 }
