@@ -78,11 +78,7 @@ class ColorPickerViewController: UIViewController {
         if let selectedNote = selectedNote {
             let changedNote = Note(uid: selectedNote.uid, title: selectedNote.title, content: selectedNote.content, color: selectedColor, importance: Importance.basic, selfDestructionDate: selectedNote.selfDestructionDate)
             delegate?.getChangedNote(note: changedNote)
-        } else {
-//            // setting new note
-//            let newNote = Note(title: "", content: "", color: selectedColor, selfDestructionDate: nil)
-//            delegate?.getChangedNote(note: newNote)
-        }
+        } 
         navigationController?.popViewController(animated: true)
     }
     

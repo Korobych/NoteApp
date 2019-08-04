@@ -34,7 +34,17 @@ class NotesTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fileNotebook.loadFromFile()
+        let loadNotesOperation = LoadNotesOperation(notebook: fileNotebook,
+                                           backendQueue: OperationQueue(),
+                                           dbQueue: OperationQueue())
+        loadNotesOperation.completionBlock = {
+            OperationQueue.main.addOperation {
+                self.notesTableView.reloadData()
+            }
+        }
+        OperationQueue().addOperation(loadNotesOperation)
+        
+        // fileNotebook.loadFromFile()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,9 +85,21 @@ extension NotesTableViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
         let note = fileNotebook.notesArray[indexPath.row]
-        fileNotebook.remove(with: note.uid)
-        fileNotebook.saveToFile()
-        tableView.deleteRows(at: [indexPath], with: .fade)
+//        fileNotebook.remove(with: note.uid)
+//        fileNotebook.saveToFile()
+//        tableView.deleteRows(at: [indexPath], with: .fade)
+        
+        let removeNoteOperation = RemoveNoteOperation(noteId: note.uid,
+                                             notebook: fileNotebook,
+                                             backendQueue: OperationQueue(),
+                                             dbQueue: OperationQueue())
+        
+        removeNoteOperation.completionBlock = {
+            OperationQueue.main.addOperation {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        }
+        OperationQueue().addOperation(removeNoteOperation)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

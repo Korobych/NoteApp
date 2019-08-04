@@ -197,7 +197,19 @@ class NoteEditViewController: UIViewController {
         if let selectedNote = selectedNote {
             // case when user edits existing note
             // this note should be deleted from array
-            index = fileNotebook.remove(with: selectedNote.uid)
+            
+            // index = fileNotebook.remove(with: selectedNote.uid)
+            
+            let removeNoteOperation = RemoveNoteOperation(noteId: selectedNote.uid,
+                                                          notebook: fileNotebook,
+                                                          backendQueue: OperationQueue(),
+                                                          dbQueue: OperationQueue())
+            removeNoteOperation.completionBlock = {
+                if let result = removeNoteOperation.result {
+                    index = result
+                }
+            }
+            OperationQueue().addOperation(removeNoteOperation)
         }
         // then new note should be created and saved
         guard let title = titleTextField.text else {return}
@@ -212,13 +224,27 @@ class NoteEditViewController: UIViewController {
         if index >= 0 {
             // case when user edits existing note
             // add note to the same array index as previously deleted note
+            
+            // NEW SaveNoteDBOperationWith Index should be implemented
+            // Task safe
             fileNotebook.addWithIndex(note: newNote, index: index)
+            fileNotebook.saveToFile()
+            selectedNote = nil
+            navigationController?.popViewController(animated: true)
+            //
         } else {
-            fileNotebook.add(noteToAdd: newNote)
+            // fileNotebook.add(noteToAdd: newNote)
+            
+            let saveNoteOperation = SaveNoteOperation(note: newNote, notebook: fileNotebook, backendQueue: OperationQueue(), dbQueue: OperationQueue())
+            
+            saveNoteOperation.completionBlock = {
+                OperationQueue.main.addOperation {
+                    self.selectedNote = nil
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+            OperationQueue().addOperation(saveNoteOperation)
         }
-        fileNotebook.saveToFile()
-        selectedNote = nil
-        navigationController?.popViewController(animated: true)
     }
     
     // MARK: Keyboard Logic

@@ -19,13 +19,8 @@ extension Note {
                 return nil
         }
         
-        var color:UIColor {
-            if let dictColor = json["color"] {
-                return UIColor.parse(from: dictColor as! [String: Float])
-            } else {
-                return .white
-            }
-        }
+        // fix later
+        let color: UIColor = UIColor.parse(from: json["color"] as! [String: Float])
         
         var importance: Importance {
             if let stringImportance = json["importance"] {
@@ -54,10 +49,9 @@ extension Note {
         jsonDict["uid"] = uid
         jsonDict["title"] = title
         jsonDict["content"] = content
-        
-        if color != UIColor.white {
-            jsonDict["color"] = color.transformToDict()
-        }
+        // fix later
+        jsonDict["color"] = color.transformToDict()
+    
         
         if importance != .basic {
             jsonDict["importance"] = importance.rawValue
